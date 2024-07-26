@@ -1,6 +1,7 @@
 package com.sky.interceptor;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.properties.JwtProperties;
 import com.sky.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -46,6 +47,9 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             log.info("jwt校验:{}", token);
             Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
             Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
+            /////////////////////////////////////////////////
+            BaseContext.setCurrentId(empId); //xuwuyuan 2024/07/26 21:18 添加这行，为了将拦截器中校验成功的员工id先保存到localThread线程局部变量中
+            /////////////////////////////////////////////////
             log.info("当前员工id：", empId);
             //3、通过，放行
             return true;

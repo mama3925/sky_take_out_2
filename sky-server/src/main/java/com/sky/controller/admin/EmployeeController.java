@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -53,8 +54,7 @@ public class EmployeeController {
         String token = JwtUtil.createJWT(
                 jwtProperties.getAdminSecretKey(),
                 jwtProperties.getAdminTtl(),
-                claims
-        );
+                claims);
 
         //作为视图对象返回
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
@@ -70,15 +70,34 @@ public class EmployeeController {
 
     /**
      *
-     * @Author: xuwuyuan
-     * @Date: 2024/7/26 16:46
-     * @Desc:
+     * @author: xuwuyuan
+     * @date: 2024/7/26 16:46
+     * @desc: 员工退出登录
      *
      * @return: com.sky.result.Result<java.lang.String>
      */
     @PostMapping("/logout")
     @ApiOperation("退出登录")
     public Result<String> logout() {
+        log.info("员工退出登录");
         return Result.success();
     }
+
+    /**
+     *
+     * @author: xuwuyuan
+     * @date: 2024/7/26 17:06
+     * @desc: 新增员工
+     *
+     * @param employeeDTO
+     * @return: com.sky.result.Result
+     */
+    @PostMapping//这里没加参数，因为类上面的requestMapping已经制定了正确路径，这里不用多加
+    @ApiOperation("新增员工")
+    public Result addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("新增员工:{}", employeeDTO);
+        employeeService.save(employeeDTO);
+        return Result.success();
+    }
+
 }
