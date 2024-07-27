@@ -26,7 +26,7 @@ public class JacksonObjectMapper extends ObjectMapper {
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
     //public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"; //项目预置代码，用来作为converter参数，格式化时间，以此优化显示
     public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
     public JacksonObjectMapper() {
