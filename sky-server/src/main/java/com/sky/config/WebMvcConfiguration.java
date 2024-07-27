@@ -67,6 +67,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
         return docket;
     }
+
     /**
      * 设置静态资源映射
      *
@@ -78,12 +79,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     /**
-     *
+     * @param converters
      * @author: xuwuyuan
      * @date: 2024/7/27 10:39
      * @desc: 自定义消息转化器，时间格式化输出
-     *
-     * @param converters
      * @return: void
      */
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {

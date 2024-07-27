@@ -50,7 +50,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             /////////////////////////////////////////////////
             BaseContext.setCurrentId(empId); //xuwuyuan 2024/07/26 21:18 添加这行，为了将拦截器中校验成功的员工id先保存到localThread线程局部变量中
             /////////////////////////////////////////////////
-            log.info("当前员工id：", empId);
+            log.info("当前员工id:{}", empId);
             //3、通过，放行
             return true;
         } catch (Exception ex) {
