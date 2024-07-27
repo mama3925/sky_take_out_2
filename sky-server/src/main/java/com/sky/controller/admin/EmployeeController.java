@@ -116,4 +116,22 @@ public class EmployeeController {
         return Result.success(pageResult);
     }
 
+    /**
+     *
+     * @author: xuwuyuan
+     * @date: 2024/7/27 12:18
+     * @desc: 员工启用停用
+     *
+     * @param status
+     * @param id
+     * @return: com.sky.result.Result
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("员工停用启用")
+    public Result startOrStop(@PathVariable int status, Long id) {
+        log.info("员工状态设置");
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
+
 }

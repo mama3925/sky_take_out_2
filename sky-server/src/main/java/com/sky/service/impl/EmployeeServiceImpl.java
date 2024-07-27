@@ -99,5 +99,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(total, object);
     }
 
-
+    /**
+     *
+     * @author: xuwuyuan
+     * @date: 2024/7/27 12:22
+     * @desc: 员工启用和停用的实现类
+     *
+     * @param status
+     * @param id
+     * @return: void
+     */
+    @Override
+    public void startOrStop(int status, Long id) {
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .build();
+        employeeMapper.update(employee);
+    }
 }

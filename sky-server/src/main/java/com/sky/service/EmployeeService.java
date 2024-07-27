@@ -37,4 +37,16 @@ public interface EmployeeService {
      */
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
+    /**
+     *
+     * @author: xuwuyuan
+     * @date: 2024/7/27 12:21
+     * @desc: 员工启用停用
+     *
+     * @param status
+     * @param id
+     * @return: void
+     */
+    void startOrStop(int status, Long id);
+
 }
