@@ -13,6 +13,7 @@ import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
+import com.sky.exception.FieldMissingException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
@@ -139,6 +140,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
+        if (employeeDTO.getId() == null) throw new FieldMissingException(MessageConstant.FIELD_MISSING);//如果DTO对象缺了id域，直接抛错
         BeanUtils.copyProperties(employeeDTO, employee);
 
         //及时更新修改时间和修改人
@@ -175,4 +177,5 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);//老密码错误，系统拒绝更改密码。所以抛出错误给全局异常工具类
         }
     }
+
 }

@@ -23,5 +23,6 @@ public class MessageConstant {
     public static final String DISH_BE_RELATED_BY_SETMEAL = "当前菜品关联了套餐,不能删除";
     public static final String ORDER_STATUS_ERROR = "订单状态错误";
     public static final String ORDER_NOT_FOUND = "订单不存在";
-    public static final String ALREADY_EXISTS = "已存在"; //xuwuyuan 2024/07/26 20:53 加上这一行为了配合GlobalExceptionHandler的sql报错检查
+    public static final String ALREADY_EXISTS = "已存在"; //xuwuyuan 2024/07/26 20:53 加上这一行，为了配合GlobalExceptionHandler的sql报错检查
+    public static final String FIELD_MISSING = "输入参数缺必要域"; //xuwuyuan 2024/07/28 10:32 解决json输入少域情况，例如确保持久层的update方法不会缺id域
 }

@@ -131,11 +131,11 @@ public class EmployeeController {
      * @param id
      * @author: xuwuyuan
      * @date: 2024/7/27 16:27
-     * @desc:
+     * @desc: 员工回显，可理解为编辑员工的子功能。先回显，之后再修改编辑
      * @return: com.sky.result.Result<com.sky.entity.Employee>
      */
     @GetMapping("/{id}")
-    @ApiOperation("编辑前员工回显")
+    @ApiOperation("编辑前的员工回显")
     public Result<Employee> getUserById(@PathVariable Long id) {
         log.info("根据id查询员工:{}", id);
         Employee employee = employeeService.getUserById(id);

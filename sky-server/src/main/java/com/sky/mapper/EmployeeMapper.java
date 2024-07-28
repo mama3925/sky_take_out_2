@@ -34,7 +34,7 @@ public interface EmployeeMapper {
      * @param employeePageQueryDTO
      * @author: xuwuyuan
      * @date: 2024/7/27 9:53
-     * @desc: 分页查询并返回Employee类型的Page对象
+     * @desc: 分页查询并返回Employee类型的Page对象。具体实现到ressources里的EmployeeMapper.xml去看
      * @return: com.github.pagehelper.Page<com.sky.entity.Employee>
      */
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
@@ -43,7 +43,7 @@ public interface EmployeeMapper {
      * @param employee
      * @author: xuwuyuan
      * @date: 2024/7/27 12:24
-     * @desc: 改员工表
+     * @desc: 改员工表。具体实现到ressources里的EmployeeMapper.xml去看
      * @return: void
      */
     void update(Employee employee);
