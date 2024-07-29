@@ -22,7 +22,7 @@ import java.util.List;
  **/
 @RestController
 @Slf4j
-@Api(tags = "分类管理")
+@Api(tags = "分类相关接口")
 @RequestMapping("/admin/category")
 public class CategoryController {
 
@@ -52,7 +52,7 @@ public class CategoryController {
      * @return: com.sky.result.PageResult
      */
     @GetMapping("/page")
-    @ApiOperation("分页查询分类")
+    @ApiOperation("分类分页查询")
     public Result<PageResult> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
         log.info("分页查询分类功能开始:{}", categoryPageQueryDTO);
         PageResult pageResult = categoryService.pageQuery(categoryPageQueryDTO);
@@ -83,7 +83,7 @@ public class CategoryController {
      * @return: com.sky.result.Result
      */
     @DeleteMapping
-    @ApiOperation("删除分类")
+    @ApiOperation("根据id删除分类")
     public Result deleteCategory(Long id) {
         log.info("分类删除功能开始:{}", id);
         categoryService.deleteById(id);//这个方法名适合用deleteById，而非delete。因为要突出靠id这个请求参数来删除分类
@@ -119,7 +119,5 @@ public class CategoryController {
         List<Category> list = categoryService.listByType(type);
         return Result.success(list);
     }
-
-
 
 }

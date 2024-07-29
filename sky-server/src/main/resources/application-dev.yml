@@ -6,3 +6,9 @@ sky:
     database: sky_take_out
     username: root
     password: woaimama1748
+
+  alioss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: LTAI5t8xtWtzxwHYLXAv6i7w
+    access-key-secret:
+    bucket-name: sky-take-out-wuyuan

@@ -27,7 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
-@Api(tags = "员工控制类")
+@Api(tags = "员工相关接口")
 public class EmployeeController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
-    @ApiOperation("员工登录操作")
+    @ApiOperation("员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("管理端员工登录:{}", employeeLoginDTO);
         Employee employee = employeeService.login(employeeLoginDTO);//通过数据模型查询数据库
@@ -120,7 +120,7 @@ public class EmployeeController {
      * @return: com.sky.result.Result
      */
     @PostMapping("/status/{status}")
-    @ApiOperation("员工停用启用")
+    @ApiOperation("启用停用员工账号")
     public Result startOrStop(@PathVariable int status, Long id) {
         log.info("员工状态设置启用或停用: {}", id);
         employeeService.startOrStop(status, id);
@@ -135,7 +135,7 @@ public class EmployeeController {
      * @return: com.sky.result.Result<com.sky.entity.Employee>
      */
     @GetMapping("/{id}")
-    @ApiOperation("编辑前的员工回显")
+    @ApiOperation("根据id查询员工")
     public Result<Employee> getUserById(@PathVariable Long id) {
         log.info("根据id查询员工:{}", id);
         Employee employee = employeeService.getUserById(id);
@@ -165,7 +165,7 @@ public class EmployeeController {
      * @return: com.sky.result.Result
      */
     @PutMapping("/editPassword")
-    @ApiOperation("修改用户密码")
+    @ApiOperation("修改密码")
     public Result updatepasswd(@RequestBody PasswordEditDTO passwordEditDTO) {
         log.info("修改密码开始:{}", passwordEditDTO);
         employeeService.updatePasswd(passwordEditDTO);
