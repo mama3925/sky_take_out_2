@@ -75,10 +75,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         //但对于DTO对象里没有的属性，需要自己赋值
         employee.setStatus(StatusConstant.ENABLE);//新创建用户默认处于激活状态
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        employee.setCreateTime(LocalDateTime.now());//创建时间字段
+
+        //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这四行代码了
+        /*employee.setCreateTime(LocalDateTime.now());//创建时间字段
         employee.setUpdateTime(LocalDateTime.now());//修改时间字段，xuwuyuan 2024/07/27 19:25 之前这里搞错了，应该是setUpdateTime,不是setCreateTime
         employee.setCreateUser(BaseContext.getCurrentId());//xuwuyuan 2024/07/26 21:19 取出localthread里的当前线程员工id局部变量，以此知道是哪个用户动了employee表
-        employee.setUpdateUser(BaseContext.getCurrentId());//同上
+        employee.setUpdateUser(BaseContext.getCurrentId());//同上*/
 
         employeeMapper.insert(employee);
     }
@@ -143,9 +145,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDTO.getId() == null) throw new FieldMissingException(MessageConstant.FIELD_MISSING);//如果DTO对象缺了id域，直接抛错
         BeanUtils.copyProperties(employeeDTO, employee);
 
-        //及时更新修改时间和修改人
+        //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这两行代码了
+        /*//及时更新修改时间和修改人
         employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        employee.setUpdateUser(BaseContext.getCurrentId());*/
 
         employeeMapper.update(employee);
     }
@@ -170,8 +173,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDB.getPassword().equals(oldPasswd)) {
             employee.setId(passwordEditDTO.getEmpId());//必须给employee传值对象一个id值，不然之后mapper的update方法无法工作。因为update方法利用id来确定需要更改的记录
             employee.setPassword(DigestUtils.md5DigestAsHex(newPasswd.getBytes())); //将临时密码传值对象的密码属性改成新密码，并md5加密
-            employee.setUpdateTime(LocalDateTime.now());//修改时间字段
-            employee.setUpdateUser(BaseContext.getCurrentId());//从LocalThread局部变量里面得到修改人的用户id，以此作为"修改人"字段
+            //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这两行代码了
+            /*employee.setUpdateTime(LocalDateTime.now());//修改时间字段
+            employee.setUpdateUser(BaseContext.getCurrentId());//从LocalThread局部变量里面得到修改人的用户id，以此作为"修改人"字段*/
             employeeMapper.update(employee);
         } else {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);//老密码错误，系统拒绝更改密码。所以抛出错误给全局异常工具类

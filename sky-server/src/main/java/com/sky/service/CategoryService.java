@@ -69,4 +69,5 @@ public interface CategoryService {
      */
     List<Category> listByType(Integer type);
 
+
 }

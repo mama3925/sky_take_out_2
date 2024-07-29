@@ -55,11 +55,12 @@ public class CategoryServiceImpl implements CategoryService {
 //        category.setStatus(0);//这里我犯错了，在有常量类的情况下，应该优先考虑常量类里的静态常量。不应该自己靠经验填入基本类型，因为有可能这是个包装类型。可能会装箱拆箱失败，然后报错
         category.setStatus(StatusConstant.DISABLE);//这行为苍穹外卖源码，属于正确答案。新增加的分类状态默认为禁用
 
-        //设置创建人，创建时间，修改人，修改时间
+        //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这四行代码了
+        /*//设置创建人，创建时间，修改人，修改时间
         category.setCreateTime(LocalDateTime.now());
         category.setUpdateTime(LocalDateTime.now());
         category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());//这里犯了小错误，当时写成了setCreateUser，和上一行重复了
+        category.setUpdateUser(BaseContext.getCurrentId());//这里犯了小错误，当时写成了setCreateUser，和上一行重复了*/
 
         categoryMapper.insert(category);
     }
@@ -107,8 +108,11 @@ public class CategoryServiceImpl implements CategoryService {
     public void update(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-        category.setUpdateTime(LocalDateTime.now());//设置当前时间作为更改时间
-        category.setUpdateUser(BaseContext.getCurrentId());//设置修改人id
+
+        //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这两行代码了
+        /*category.setUpdateTime(LocalDateTime.now());//设置当前时间作为更改时间
+        category.setUpdateUser(BaseContext.getCurrentId());//设置修改人id*/
+
         categoryMapper.update(category);
     }
 

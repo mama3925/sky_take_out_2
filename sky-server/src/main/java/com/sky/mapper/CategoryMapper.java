@@ -1,8 +1,10 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.annotation.AutoFill;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
+import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public interface CategoryMapper {
      * @param category
      * @return: void
      */
+    @AutoFill(value = OperationType.INSERT)
     @Insert("insert into category values (#{id}, #{type}, #{name}, #{sort}, #{status},"+
             "#{createTime}, #{updateTime}, #{createUser}, #{updateUser})")//注意这个语法要和update区分，后面values()括号里不需要等号赋值
     void insert(Category category);
@@ -52,6 +55,7 @@ public interface CategoryMapper {
      * @param category
      * @return: void
      */
+    @AutoFill(value = OperationType.UPDATE)
     void update(Category category);
 
     /**
