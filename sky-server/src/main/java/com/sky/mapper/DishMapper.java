@@ -1,8 +1,11 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
+import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -40,5 +43,14 @@ public interface DishMapper {
             "#{createTime}, #{updateTime}, #{createUser}, #{updateUser})")//这里也要对应补上
     @Options(useGeneratedKeys = true, keyProperty = "id")//这里和源码不同，我用自己习惯的方式实现，没必要加xml文件
     void insert(Dish dish);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/7/30 11:11
+     * @desc: 菜品分类查询
+     * @param dishPageQueryDTO
+     * @return: com.github.pagehelper.Page<com.sky.vo.DishVO>
+     */
+    Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
 }

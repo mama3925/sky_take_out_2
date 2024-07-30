@@ -1,6 +1,8 @@
 package com.sky.service;
 
 import com.sky.dto.DishDTO;
+import com.sky.dto.DishPageQueryDTO;
+import com.sky.result.PageResult;
 
 /**
  * @author: xuwuyuan
@@ -17,4 +19,13 @@ public interface DishService {
      * @return: void
      */
     void save(DishDTO dishDTO);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/7/30 10:17
+     * @desc: 菜品分页查询
+     * @param dishPageQueryDTO
+     * @return: com.sky.result.PageResult
+     */
+    PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
 }

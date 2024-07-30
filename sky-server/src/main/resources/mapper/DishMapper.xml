@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.DishMapper">
+
+    <!--在mapper中改变输出对象为VO，不只是在controller中能改变为VO对象    -->
+    <!--我就填错了resultType路径，之前就报错了    -->
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        <!--这里c.name和d.*的顺序可颠倒，但是c.name as后面的字段名一定要对应返回类型DishVO实体类里的对应属性名，不然结果就是categoryName字段会返回null        -->
+        <!--正常来说这里可以使用inner join或者简写为join，因为业务规则明确规定，新增菜品必须关联一个分类，但是实际操作可能会忘记，而且业务类也没有相关限制，数据库dish表的category_id字段也没有not null约束-->
+        select  c.name categoryName, d.* from dish d left join category c on d.category_id = c.id
+        <where>
+            <if test="name != null">and d.name like concat('%', #{name}, '%')</if>
+            <if test="categoryId != null">and c.category_id = #{categoryId}</if>
+            <if test="status != null">and d.status = #{status}</if>
+        </where>
+        order by d.create_time desc
+    </select>
+
+</mapper>
