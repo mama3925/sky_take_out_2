@@ -8,8 +8,12 @@ import com.sky.service.DishService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: xuwuyuan
@@ -53,5 +57,20 @@ public class DishController {
         log.info("菜品分页查询功能开始:{}", dishPageQueryDTO);
         PageResult pageResult = dishService.pageQuery(dishPageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/7/30 21:58
+     * @desc: 批量删除菜品
+     * @param ids
+     * @return: com.sky.result.Result
+     */
+    @DeleteMapping
+    @ApiOperation("批量删除菜品")
+    public Result deleteBatch(@RequestParam List<Long> ids) {
+        log.info("批量删除菜品:{}", ids);
+        dishService.deleteBatch(ids);
+        return Result.success();
     }
 }

@@ -5,10 +5,21 @@
 
     <insert id="insertBatch">
         insert into dish_flavor (dish_id, name, value) values
-<!--这里的collection指的是传入对象，不是传入对象类型。所以一定要和mapper里面的传入形参名对应        -->
+        <!--这里的collection指的是传入对象，不是传入对象类型。所以一定要和mapper里面的传入形参名对应        -->
         <foreach collection="flavors" item="df" separator=",">
+            <!--        这里不要忘了加上#{}，所有传入类都必须加这个符号-->
             (#{df.dishId}, #{df.name}, #{df.value})
         </foreach>
     </insert>
+
+    <delete id="deleteBatchByDishIDs">
+        delete from dish_flavor
+        <where>
+            dish_id in
+            <foreach collection="dishIDs" item="dishId" open="(" separator="," close=")">
+                #{dishId}
+            </foreach>
+        </where>
+    </delete>
 
 </mapper>

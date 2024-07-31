@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @author: xuwuyuan
  * @desc: 菜品持久层
@@ -53,4 +55,22 @@ public interface DishMapper {
      */
     Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/7/31 9:51
+     * @desc: 通过传入id列表批量删除菜品
+     * @param ids
+     * @return: void
+     */
+    void deleteBatch(List<Long> ids);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/7/31 10:09
+     * @desc: 通过id查询菜品表
+     * @param id
+     * @return: com.sky.entity.Dish
+     */
+    @Select("select * from dish where id = #{id}")
+    Dish getById(Long id);
 }

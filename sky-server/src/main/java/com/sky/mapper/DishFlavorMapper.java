@@ -24,4 +24,12 @@ public interface DishFlavorMapper {
      */
     void insertBatch(List<DishFlavor> flavors);
 
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/7/31 9:55
+     * @desc: 根据传入的菜品id列表来进行口味批量删除
+     * @param dishIDs
+     * @return: void
+     */
+    void deleteBatchByDishIDs(List<Long> dishIDs);
 }

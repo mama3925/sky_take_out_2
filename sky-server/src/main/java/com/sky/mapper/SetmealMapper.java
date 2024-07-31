@@ -20,5 +20,4 @@ public interface SetmealMapper {
      */
     @Select("select count(*) from setmeal where category_id = #{id}")//这里犯错误了，我以为只有传入实体对象要加#{}，实际上就算是包装类等简单参数，也必须要#{}
     Integer countByCategoryId(Long id);
-
 }

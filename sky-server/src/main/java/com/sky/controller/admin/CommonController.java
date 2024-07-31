@@ -50,7 +50,7 @@ public class CommonController {
         } catch (IOException e) {//这里犯错了，类型是IOException，因为涉及Java IO。
             log.info("文件上传失败:{}", e);
         }
-        return Result.error(MessageConstant.UPLOAD_FAILED); //这里最好用常量
+        return Result.error(MessageConstant.UPLOAD_FAILED); //这里最好用消息常量
     }
 
 }
