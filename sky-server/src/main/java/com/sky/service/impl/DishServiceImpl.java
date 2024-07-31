@@ -41,8 +41,7 @@ public class DishServiceImpl implements DishService {
     private DishFlavorMapper dishFlavorMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
-    @Autowired
-    private DishController dishController;
+
 
     /**
      * @param dishDTO
