@@ -135,14 +135,19 @@ public class DishServiceImpl implements DishService {
      * @return: com.sky.vo.DishVO
      */
     @Override
-    @Transactional //涉及两个持久层的操纵，分别是dishMapper和dishFlavorMapper
+    //这里不需要事务注解，因为不会动数据库
     public DishVO getByIdWithFlavor(Long id) {
-        List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);//获取当前dishId的口味列表
+        //这两句花可以合到一起写，只不过我为了要测试是不是因为这个返回值是list引起了IllegalArgumentException: Source must not be null
+        List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
 
-        Dish dish = dishMapper.getById(id);
+        //将dish里的对象全部输入给VO视图对象，然后再设置一个口味。
+        Dish dish = dishMapper.getById(id); //感兴趣的话，这里还能加一个抛出错误，避免dish为0
         DishVO dishVO = new DishVO();
+        if(dish == null) throw new NoSuchRecordException(MessageConstant.RECORD_NOT_FOUND);//错误控制写在这里，也可以加一些其他语句
         BeanUtils.copyProperties(dish, dishVO);
         dishVO.setFlavors(flavors);
         return dishVO;
     }
+
+
 }

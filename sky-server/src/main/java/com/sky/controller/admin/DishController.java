@@ -31,10 +31,10 @@ public class DishController {
     private DishService dishService;
 
     /**
+     * @param dishDTO
      * @author: xuwuyuan
      * @date: 2024/7/29 20:38
      * @desc: 新增菜品功能，这个功能必须要前后端联调，因为knife没办法实现图片上传。图片上传和新增菜品功能在后端设计里没集成在一起，但是在前端代码里集成了
-     * @param dishDTO
      * @return: com.sky.result.Result
      */
     @PostMapping
@@ -46,10 +46,10 @@ public class DishController {
     }
 
     /**
+     * @param dishPageQueryDTO
      * @author: xuwuyuan
      * @date: 2024/7/30 9:56
      * @desc: 菜品分页查询。传入业务层时，可能需要规定默认参数
-     * @param dishPageQueryDTO
      * @return: com.sky.result.Result<com.sky.result.PageResult>
      */
     @GetMapping("/page")
@@ -61,10 +61,10 @@ public class DishController {
     }
 
     /**
+     * @param ids
      * @author: xuwuyuan
      * @date: 2024/7/30 21:58
      * @desc: 批量删除菜品
-     * @param ids
      * @return: com.sky.result.Result
      */
     @DeleteMapping
@@ -76,10 +76,10 @@ public class DishController {
     }
 
     /**
+     * @param id
      * @author: xuwuyuan
      * @date: 2024/7/31 12:15
      * @desc: 根据id查询菜品
-     * @param id
      * @return: com.sky.result.Result<com.sky.vo.DishVO>
      */
     @GetMapping("/{id}")
@@ -89,4 +89,19 @@ public class DishController {
         DishVO dishVO = dishService.getByIdWithFlavor(id);
         return Result.success(dishVO);
     }
+
+//    /**
+//     * @param dishDTO
+//     * @author: xuwuyuan
+//     * @date: 2024/7/31 15:42
+//     * @desc: 修改菜品，同时修改口味表
+//     * @return: com.sky.result.Result
+//     */
+//    @PutMapping
+//    @ApiOperation("修改菜品")
+//    public Result update(DishDTO dishDTO) {
+//        log.info("修改菜品功能开始:{}", dishDTO);
+//        dishService.update(dishDTO);
+//        return Result.success();
+//    }
 }
