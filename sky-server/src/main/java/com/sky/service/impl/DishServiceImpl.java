@@ -136,17 +136,45 @@ public class DishServiceImpl implements DishService {
     @Override
     //这里不需要事务注解，因为不会动数据库
     public DishVO getByIdWithFlavor(Long id) {
-        //这两句花可以合到一起写，只不过我为了要测试是不是因为这个返回值是list引起了IllegalArgumentException: Source must not be null
         List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
 
         //将dish里的对象全部输入给VO视图对象，然后再设置一个口味。
         Dish dish = dishMapper.getById(id); //感兴趣的话，这里还能加一个抛出错误，避免dish为0
         DishVO dishVO = new DishVO();
-        if(dish == null) throw new NoSuchRecordException(MessageConstant.RECORD_NOT_FOUND);//错误控制写在这里，也可以加一些其他语句
+        if (dish == null) throw new NoSuchRecordException(MessageConstant.RECORD_NOT_FOUND);//错误控制写在这里，也可以加一些其他语句
         BeanUtils.copyProperties(dish, dishVO);
         dishVO.setFlavors(flavors);
         return dishVO;
     }
 
+    /**
+     * @param dishDTO
+     * @author: xuwuyuan
+     * @date: 2024/8/3 15:25
+     * @desc: 修改菜品
+     * @return: void
+     */
+    @Override
+    @Transactional
+    public void updateWithFlavor(DishDTO dishDTO) {
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+        dishMapper.update(dish);
 
+        //批量删除口味，准备之后再重新插入
+        Long dishId = dishDTO.getId();//取得输入对象的id，即为dishid
+        List<Long> dishIDs = new ArrayList();
+        dishIDs.add(dishId);//将唯一的dishId插入列表容器
+        dishFlavorMapper.deleteBatchByDishIDs(dishIDs);
+
+        //批量插入变更后的口味
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        //遍历列表里的所有口味，并适当添加。
+        if (flavors != null && flavors.size() != 0)
+            flavors.forEach(dishFlavor -> {
+                dishFlavor.setDishId(dishId);
+            });
+
+        dishFlavorMapper.insertBatch(flavors);
+    }
 }

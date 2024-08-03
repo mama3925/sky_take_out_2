@@ -38,7 +38,7 @@ public interface DishFlavorMapper {
      * @param id
      * @author: xuwuyuan
      * @date: 2024/7/31 12:55
-     * @desc:
+     * @desc: 根据传入id返回口味列表
      * @return: java.util.List<com.sky.entity.DishFlavor>
      */
     @Select("select * from dish_flavor where dish_id = #{id}")

@@ -90,18 +90,18 @@ public class DishController {
         return Result.success(dishVO);
     }
 
-//    /**
-//     * @param dishDTO
-//     * @author: xuwuyuan
-//     * @date: 2024/7/31 15:42
-//     * @desc: 修改菜品，同时修改口味表
-//     * @return: com.sky.result.Result
-//     */
-//    @PutMapping
-//    @ApiOperation("修改菜品")
-//    public Result update(DishDTO dishDTO) {
-//        log.info("修改菜品功能开始:{}", dishDTO);
-//        dishService.update(dishDTO);
-//        return Result.success();
-//    }
+    /**
+     * @param dishDTO
+     * @author: xuwuyuan
+     * @date: 2024/7/31 15:42
+     * @desc: 修改菜品，同时修改口味表
+     * @return: com.sky.result.Result
+     */
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result update(@RequestBody DishDTO dishDTO) {
+        log.info("修改菜品功能开始:{}", dishDTO);
+        dishService.updateWithFlavor(dishDTO);
+        return Result.success();
+    }
 }

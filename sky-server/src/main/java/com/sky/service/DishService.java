@@ -42,11 +42,20 @@ public interface DishService {
     void deleteBatch(List<Long> ids);
 
     /**
+     * @param id
      * @author: xuwuyuan
      * @date: 2024/7/31 12:24
      * @desc: 获取dishvo对象。相比于dish对象，dishvo增加了属性flavors列表
-     * @param id
      * @return: com.sky.vo.DishVO
      */
     DishVO getByIdWithFlavor(Long id);
+
+    /**
+     * @param dishDTO
+     * @author: xuwuyuan
+     * @date: 2024/8/3 15:23
+     * @desc: 修改菜品功能
+     * @return: void
+     */
+    void updateWithFlavor(DishDTO dishDTO);
 }
