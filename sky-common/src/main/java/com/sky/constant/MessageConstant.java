@@ -26,4 +26,5 @@ public class MessageConstant {
     public static final String ALREADY_EXISTS = "已存在"; //xuwuyuan 2024/07/26 20:53 加上这一行，为了配合GlobalExceptionHandler的sql报错检查
     public static final String FIELD_MISSING = "输入参数缺必要域"; //xuwuyuan 2024/07/28 10:32 解决json输入少域情况，例如确保持久层的update方法不会缺id域
     public static final String RECORD_NOT_FOUND = "数据库里没有相关记录"; //xuwuyuan 2024/07/31 10:38 解决查询返回null，然后引起业务类报错
+    public static final String DISH_DISABLE_FAILED = "菜品关联着发售中的套餐，无法停售";//xuwuyuan 2024/08/03 21:00 解决菜品停售引起的套餐失效问题
 }

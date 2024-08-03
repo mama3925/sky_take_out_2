@@ -58,4 +58,14 @@ public interface DishService {
      * @return: void
      */
     void updateWithFlavor(DishDTO dishDTO);
+
+    /**
+     * @param status
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/3 20:37
+     * @desc: 启停用功能
+     * @return: void
+     */
+    void startOrStop(Integer status, Long id);
 }

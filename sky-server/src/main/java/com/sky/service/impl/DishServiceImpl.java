@@ -3,15 +3,15 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.controller.admin.DishController;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
-import com.sky.exception.DeletionNotAllowedException;
-import com.sky.exception.FieldMissingException;
-import com.sky.exception.NoSuchRecordException;
+import com.sky.exception.*;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
@@ -41,6 +41,8 @@ public class DishServiceImpl implements DishService {
     private DishFlavorMapper dishFlavorMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
 
 
     /**
@@ -177,4 +179,63 @@ public class DishServiceImpl implements DishService {
 
         dishFlavorMapper.insertBatch(flavors);
     }
+
+    /**
+     * @param status
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/3 21:03
+     * @desc: 菜品启售停售功能
+     * @return: void
+     */
+    @Override
+    @Transactional //源码用了事务注解声明，我自己的实现没使用。因为我自己的实现不包括对两个dao层的修改请求
+    public void startOrStop(Integer status, Long id) {
+        //以下是我的代码，和源码相比，我认为受套餐限制时无法禁用某个菜品，源码认为禁用一个菜品只要确保同时禁用潜在关联的套餐即可，属于业务模糊
+        /*List<Long> idList = new ArrayList<>();
+        idList.add(id);//构造一个List，只含有一个元素
+        List<Long> setmealIDs = setmealDishMapper.getSetmealIDsByDishIDs(idList);//如果有个方法参数是Long类型的id，那就不用生造一个List然后插入单个元素了
+
+        //需要防止因为禁用该菜品，导致某个发售中的套餐失效。所以提前加一个预处理，截断违规操作(停用菜品的同时导致发售中的某个套餐失去了一个菜品)
+        for (Long setmealID : setmealIDs) {
+            Setmeal setmeal = setmealMapper.getById(id);
+            if (setmeal.getStatus() == 1)
+                throw new DishDisableFailedException(MessageConstant.DISH_DISABLE_FAILED);//这里应该抛出DishEnableFailed异常，这是我自己定义的异常类和消息常量
+        }
+
+        //对于启用和禁用，以下代码都适用。调用dao层请求更新数据库。
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+        dishMapper.update(dish);*/
+
+        //以下为源码
+        //创建dish对象并且借助它更新数据层
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+        dishMapper.update(dish);
+
+        //获取关联该菜品id的所有套餐对象
+        List<Long> idList = new ArrayList<>();
+        idList.add(id);
+        List<Long> setmealIDs = setmealDishMapper.getSetmealIDsByDishIDs(idList);
+
+        //先判断获取到的套餐列表是否为空。获得空列表，说明该菜品没有关联套餐。这里我漏了这个判断条件，一旦套餐列表为null，后面一行马上会报错，nullPointerException
+        if (setmealIDs != null && setmealIDs.size() != 0) {
+            //将这些套餐对象全部禁用
+            setmealIDs.forEach(setmealId -> {
+                if (status == StatusConstant.DISABLE) {//状态为禁用
+                    Setmeal setmeal = Setmeal.builder()
+                            .id(setmealId) //规定查询对象的id等于刚才查到的套餐id
+                            .status(status)
+                            .build();
+                    setmealMapper.update(setmeal);
+                }
+            });
+        }
+    }
+
 }

@@ -101,7 +101,15 @@ public class DishController {
     @ApiOperation("修改菜品")
     public Result update(@RequestBody DishDTO dishDTO) {
         log.info("修改菜品功能开始:{}", dishDTO);
-        dishService.updateWithFlavor(dishDTO);
+        dishService.updateWithFlavor(dishDTO); //这里的方法最好由update重命名为updateWtihFlavor
+        return Result.success();
+    }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用停用菜品")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("启用停用菜品功能开始:{} {}", status, id);
+        dishService.startOrStop(status, id);
         return Result.success();
     }
 }
