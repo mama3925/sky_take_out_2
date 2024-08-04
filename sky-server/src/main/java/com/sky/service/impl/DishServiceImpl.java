@@ -225,8 +225,8 @@ public class DishServiceImpl implements DishService {
 
         //先判断获取到的套餐列表是否为空。获得空列表，说明该菜品没有关联套餐。这里我漏了这个判断条件，一旦套餐列表为null，后面一行马上会报错，nullPointerException
         if (setmealIDs != null && setmealIDs.size() != 0) {
-            //将这些套餐对象全部禁用
-            setmealIDs.forEach(setmealId -> {
+            //将这些套餐对象全部禁用，这里优先使用增强for循环，因为Stream类的foreach方法和lambda表达式只适合短句
+            for (Long setmealId : setmealIDs) {
                 if (status == StatusConstant.DISABLE) {//状态为禁用
                     Setmeal setmeal = Setmeal.builder()
                             .id(setmealId) //规定查询对象的id等于刚才查到的套餐id
@@ -234,7 +234,7 @@ public class DishServiceImpl implements DishService {
                             .build();
                     setmealMapper.update(setmeal);
                 }
-            });
+            }
         }
     }
 
