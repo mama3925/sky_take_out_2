@@ -1,6 +1,8 @@
 package com.sky.service;
 
 import com.sky.dto.SetmealDTO;
+import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.result.PageResult;
 
 /**
  * @author: xuwuyuan
@@ -16,4 +18,13 @@ public interface SetmealService {
      * @return: void
      */
     void insertWithDish(SetmealDTO setmealDTO);
+
+    /**
+     * @param setmealPageQueryDTO
+     * @author: xuwuyuan
+     * @date: 2024/8/4 12:29
+     * @desc: 分页查询
+     * @return: com.sky.result.PageResult
+     */
+    PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

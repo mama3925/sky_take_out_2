@@ -1,11 +1,15 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
+import com.sky.result.PageResult;
 import com.sky.service.SetmealService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +32,10 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealDishMapper setmealDishMapper;
 
     /**
+     * @param setmealDTO
      * @author: xuwuyuan
      * @date: 2024/8/4 10:28
      * @desc: 插入套餐
-     * @param setmealDTO
      * @return: void
      */
     @Override
@@ -54,5 +58,19 @@ public class SetmealServiceImpl implements SetmealService {
             });
         }
         setmealDishMapper.insertBatch(setmealDishList);
+    }
+
+    /**
+     * @param setmealPageQueryDTO
+     * @author: xuwuyuan
+     * @date: 2024/8/4 12:33
+     * @desc: 分页查询
+     * @return: com.sky.result.PageResult
+     */
+    @Override
+    public PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO) {
+        PageHelper.startPage(setmealPageQueryDTO.getPage(), setmealPageQueryDTO.getPageSize());//这里第二个域写成了getPage()，导致查询出现问题
+        Page<Setmeal> page = (Page<Setmeal>) setmealMapper.pageQuery(setmealPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

@@ -1,6 +1,8 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
@@ -63,4 +65,13 @@ public interface SetmealMapper {
             "(#{id}, #{categoryId}, #{name}, #{price}, #{status}, #{description}, #{image}, " +
             "#{createTime}, #{updateTime}, #{createUser}, #{updateUser})")
     void insert(Setmeal setmeal);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/4 12:35
+     * @desc: 分页查询
+     * @param setmealPageQueryDTO
+     * @return: com.github.pagehelper.Page<com.sky.entity.Setmeal>
+     */
+    Page<Setmeal> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }
