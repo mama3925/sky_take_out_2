@@ -105,6 +105,14 @@ public class DishController {
         return Result.success();
     }
 
+    /**
+     * @param status
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/5 8:54
+     * @desc: 菜品启用停用
+     * @return: com.sky.result.Result
+     */
     @PostMapping("/status/{status}")
     @ApiOperation("启用停用菜品")
     public Result startOrStop(@PathVariable Integer status, Long id) {

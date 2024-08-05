@@ -5,10 +5,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -41,20 +38,20 @@ public interface SetmealMapper {
     Setmeal getById(Long id);
 
     /**
+     * @param setmeal
      * @author: xuwuyuan
      * @date: 2024/8/3 21:51
      * @desc: 更新套餐表
-     * @param setmeal
      * @return: void
      */
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
 
     /**
+     * @param setmeal
      * @author: xuwuyuan
      * @date: 2024/8/4 11:44
      * @desc:
-     * @param setmeal 
      * @return: void
      */
     @AutoFill(OperationType.INSERT)
@@ -67,11 +64,22 @@ public interface SetmealMapper {
     void insert(Setmeal setmeal);
 
     /**
+     * @param setmealPageQueryDTO
      * @author: xuwuyuan
      * @date: 2024/8/4 12:35
      * @desc: 分页查询
-     * @param setmealPageQueryDTO
      * @return: com.github.pagehelper.Page<com.sky.entity.Setmeal>
      */
     Page<Setmeal> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * @param setmealId
+     * @author: xuwuyuan
+     * @date: 2024/8/5 9:36
+     * @desc: 根据id删除对应套餐
+     * @return: void
+     */
+    @Delete("delete from setmeal where id = #{setmealId}")
+    void deleteById(Long setmealId);
+
 }

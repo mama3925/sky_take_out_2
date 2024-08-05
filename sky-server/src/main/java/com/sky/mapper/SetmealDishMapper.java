@@ -4,6 +4,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.entity.SetmealDish;
 import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -32,4 +33,23 @@ public interface SetmealDishMapper {
      */
     //这里不用加AutoFill注解，因为数据库中的套餐菜品关联表没有时间和用户字段
     void insertBatch(List<SetmealDish> setmealDishList);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/5 9:31
+     * @desc: 通过套餐id批量删除关联表记录
+     * @param setmealId
+     * @return: void
+     */
+    void deleteBatchBySetmealId(Long setmealId);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/5 10:59
+     * @desc: 通过套餐id查询关联列表
+     * @param setmealId
+     * @return: java.util.List<com.sky.entity.SetmealDish>
+     */
+    @Select("select * from setmeal_dish where setmeal_id = #{setmealId}")
+    List<SetmealDish> findBySetmealId(Long setmealId);
 }

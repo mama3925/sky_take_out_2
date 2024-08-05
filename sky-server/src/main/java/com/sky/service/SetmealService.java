@@ -2,7 +2,11 @@ package com.sky.service;
 
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Setmeal;
 import com.sky.result.PageResult;
+import com.sky.vo.SetmealVO;
+
+import java.util.List;
 
 /**
  * @author: xuwuyuan
@@ -27,4 +31,31 @@ public interface SetmealService {
      * @return: com.sky.result.PageResult
      */
     PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/5 9:02
+     * @desc: 批量删除功能
+     * @param ids
+     * @return: void
+     */
+    void deleteByIDs(List<Long> ids);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/5 9:45
+     * @desc: 根据DTO对象来修改套餐，并且更改关联表，确保菜品变动都会实时反映在关联表里
+     * @param setmealDTO
+     * @return: void
+     */
+    void updateWithDishes(SetmealDTO setmealDTO);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/5 10:49
+     * @desc: 通过id查询套餐，并返回vo对象
+     * @param id
+     * @return: com.sky.vo.SetmealVO
+     */
+    SetmealVO findByIdWithDish(Long id);
 }
