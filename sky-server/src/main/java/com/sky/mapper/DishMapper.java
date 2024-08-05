@@ -77,12 +77,21 @@ public interface DishMapper {
     Dish getById(Long id);
 
     /**
+     * @param dish
      * @author: xuwuyuan
      * @date: 2024/8/3 16:42
      * @desc: 修改菜品表
-     * @param dish
      * @return: void
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
+    /**
+     * @param dish
+     * @author: xuwuyuan
+     * @date: 2024/8/5 11:28
+     * @desc: 通过dish对象里的分类id和状态=1，来查询对应的列表，并且返回
+     * @return: java.util.List<com.sky.entity.Dish>
+     */
+    List<Dish> list(Dish dish);
 }

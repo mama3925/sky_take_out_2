@@ -20,11 +20,4 @@
             </foreach>
     </insert>
 
-    <delete id="deleteBatchBySetmealId">
-        delete from setmeal_dish
-        <where>
-            id = #{setmealId}
-        </where>
-    </delete>
-
 </mapper>

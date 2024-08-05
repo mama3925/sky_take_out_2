@@ -93,14 +93,31 @@ public class SetmealServiceImpl implements SetmealService {
         //我们假设理想情况下，ids列表不可能为空
         ids.forEach(id -> {
             Setmeal setmeal = setmealMapper.getById(id);
-            //未启售中的套餐才能删除
+            //未启售中的套餐才能删除，这一部分我和源码不同，我认为我的版本也可
             if (setmeal.getStatus().equals(StatusConstant.DISABLE)) {
+                setmealMapper.deleteById(id); //这里我顺序还搞反了，正常来说要先删除套餐，再删除关联。
                 setmealDishMapper.deleteBatchBySetmealId(id);
-                setmealMapper.deleteById(id);
             } else {
                 throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);//启售中的套餐不能删除
             }
         });
+
+        //源码是先遍历，只要有一个处于停售，就直接抛出错误，最后重新遍历一遍，给套餐表和关联表赋值。我是在过程中用if分支控制，也能起到同样效果，但是效率低
+
+        /*ids.forEach(id -> {
+            Setmeal setmeal = setmealMapper.getById(id);
+            if(StatusConstant.ENABLE == setmeal.getStatus()){
+                //起售中的套餐不能删除
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        });
+
+        ids.forEach(setmealId -> {
+            //删除套餐表中的数据
+            setmealMapper.deleteById(setmealId);
+            //删除套餐菜品关系表中的数据
+            setmealDishMapper.deleteBySetmealId(setmealId);
+        });*/
     }
 
     /**
@@ -115,6 +132,7 @@ public class SetmealServiceImpl implements SetmealService {
     public void updateWithDishes(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
+
         Long setmealId = setmealDTO.getId();
         setmealDishMapper.deleteBatchBySetmealId(setmealId);//一旦setmeal_id域等于DTO对象里的setmealId属性，立刻批量删除
 
@@ -137,6 +155,7 @@ public class SetmealServiceImpl implements SetmealService {
      */
     @Override
     public SetmealVO findByIdWithDish(Long id) {
+        //在SetmealVO中先搞定除了setmealdishes属性以外的属性
         Setmeal setmeal = setmealMapper.getById(id);//查询到的套餐对象
         SetmealVO setmealVO = new SetmealVO();
         BeanUtils.copyProperties(setmeal, setmealVO);

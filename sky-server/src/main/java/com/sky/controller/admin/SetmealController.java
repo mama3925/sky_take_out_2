@@ -60,20 +60,27 @@ public class SetmealController {
     }
 
     /**
+     * @param ids
      * @author: xuwuyuan
      * @date: 2024/8/5 9:00
      * @desc: 套餐批量删除
-     * @param ids
      * @return: com.sky.result.Result
      */
     @DeleteMapping
     @ApiOperation("批量删除套餐")
-    public Result delete(List<Long> ids) {
+    public Result delete(@RequestParam List<Long> ids) {//这里又漏了@RequestParam注解，对于列表参数，必须有。否则传不进去
         log.info("套餐批量删除功能开始:{}", ids);
         setmealService.deleteByIDs(ids);//输入套餐id列表，进行删除
         return Result.success();
     }
 
+    /**
+     * @param setmealDTO
+     * @author: xuwuyuan
+     * @date: 2024/8/5 11:13
+     * @desc: 修改套餐
+     * @return: com.sky.result.Result
+     */
     @PutMapping
     @ApiOperation("修改套餐")
     public Result update(SetmealDTO setmealDTO) {
@@ -82,6 +89,13 @@ public class SetmealController {
         return Result.success();
     }
 
+    /**
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/5 11:13
+     * @desc: 根据id查询套餐
+     * @return: com.sky.result.Result<com.sky.vo.SetmealVO>
+     */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询套餐")
     public Result<SetmealVO> findById(@PathVariable Long id) {
@@ -89,4 +103,5 @@ public class SetmealController {
         SetmealVO setmealVO = setmealService.findByIdWithDish(id);
         return Result.success(setmealVO);
     }
+
 }

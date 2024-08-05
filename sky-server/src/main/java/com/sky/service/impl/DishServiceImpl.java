@@ -238,4 +238,19 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    /**
+     * @param categoryId
+     * @author: xuwuyuan
+     * @date: 2024/8/5 11:24
+     * @desc: 返回菜品列表
+     * @return: java.util.List<com.sky.entity.Dish>
+     */
+    @Override
+    public List<Dish> listByCategoryId(Long categoryId) {
+        Dish dish = Dish.builder()
+                .status(StatusConstant.ENABLE) //确保只返回已启用的菜品
+                .categoryId(categoryId)
+                .build();
+        return dishMapper.list(dish);
+    }
 }
