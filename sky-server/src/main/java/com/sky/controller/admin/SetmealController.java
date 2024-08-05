@@ -83,7 +83,7 @@ public class SetmealController {
      */
     @PutMapping
     @ApiOperation("修改套餐")
-    public Result update(SetmealDTO setmealDTO) {
+    public Result update(@RequestBody SetmealDTO setmealDTO) {//又漏了requestbody
         log.info("套餐修改功能开始:{}", setmealDTO);
         setmealService.updateWithDishes(setmealDTO);
         return Result.success();

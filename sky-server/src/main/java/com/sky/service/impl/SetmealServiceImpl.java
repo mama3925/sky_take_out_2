@@ -62,8 +62,8 @@ public class SetmealServiceImpl implements SetmealService {
             setmealDishList.forEach(setmealDish -> {
                 setmealDish.setSetmealId(setmealId);//类似于之前写的新建菜品功能，DTO对象里都多出一个列表属性，原bean里没有
             });
+            setmealDishMapper.insertBatch(setmealDishList);//只有关联表有值才过来赋值
         }
-        setmealDishMapper.insertBatch(setmealDishList);
     }
 
     /**
@@ -132,6 +132,7 @@ public class SetmealServiceImpl implements SetmealService {
     public void updateWithDishes(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
+        setmealMapper.update(setmeal);
 
         Long setmealId = setmealDTO.getId();
         setmealDishMapper.deleteBatchBySetmealId(setmealId);//一旦setmeal_id域等于DTO对象里的setmealId属性，立刻批量删除
@@ -140,10 +141,10 @@ public class SetmealServiceImpl implements SetmealService {
         List<SetmealDish> setmealDishList = setmealDTO.getSetmealDishes();
         if (setmealDishList != null && setmealDishList.size() != 0) {
             setmealDishList.forEach(setmealDish -> {
-                setmealDish.setSetmealId(setmealId);//插入的这些关联表属性就差了套餐id属性，所以现在全部设置进去
+                setmealDish.setSetmealId(setmealId);//插入的这些关联表属性就差了套餐id属性，所以现在全部填进去
             });
+            setmealDishMapper.insertBatch(setmealDishList);//这句话漏了，所以最后无法生效。无法全部插入
         }
-        setmealDishMapper.insertBatch(setmealDishList);//这句话漏了，所以最后无法生效。无法全部插入
     }
 
     /**
