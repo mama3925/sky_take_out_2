@@ -11,6 +11,8 @@ import com.sky.entity.DishFlavor;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.exception.DeletionNotAllowedException;
+import com.sky.exception.SetmealEnableFailedException;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -22,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +39,8 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealMapper setmealMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private DishMapper dishMapper;
 
     /**
      * @param setmealDTO
@@ -165,5 +170,34 @@ public class SetmealServiceImpl implements SetmealService {
         List<SetmealDish> dishes = setmealDishMapper.findBySetmealId(id);
         setmealVO.setSetmealDishes(dishes);
         return setmealVO;
+    }
+
+    /**
+     * @param status
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/6 8:48
+     * @desc: 套餐启停
+     * @return: void
+     */
+    @Override
+    @Transactional
+    public void startOrStop(Integer status, Long id) {
+        //针对启用套餐请求的单独处理，防止启用的套餐中包含处于禁用状态的菜品
+        if (status.equals(StatusConstant.ENABLE)) {
+            //dish表左连接setmeal_dish，因为有的dish可能没有和setmeal关联，这个也要算进去。
+            //底层实现原理是select d.* from dish d left join setmeal_dish sd on d.id = sd.dish_id
+            List<Dish> dishes = dishMapper.getDishesBySetmealId(id);
+            for (Dish dish : dishes) {
+                if (dish.getStatus().equals(StatusConstant.DISABLE))
+                    throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);//套餐包含未启售菜品，所以直接抛错
+            }
+        }
+        //以下为启用和禁用两个请求都需要执行的代码段，只不过如果启用请求不符合业务逻辑，在上一个if分支就被throw掉了，不会走到这里
+        Setmeal setmeal = Setmeal.builder()
+                .id(id)
+                .status(status)
+                .build();
+        setmealMapper.update(setmeal);
     }
 }

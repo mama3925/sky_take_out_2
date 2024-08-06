@@ -227,7 +227,7 @@ public class DishServiceImpl implements DishService {
         if (setmealIDs != null && setmealIDs.size() != 0) {
             //将这些套餐对象全部禁用，这里优先使用增强for循环，因为Stream类的foreach方法和lambda表达式只适合短句
             for (Long setmealId : setmealIDs) {
-                if (status == StatusConstant.DISABLE) {//状态为禁用
+                if (status == StatusConstant.DISABLE) {//如果输入请求为禁用，那么就要顺便禁止关联的在售套餐
                     Setmeal setmeal = Setmeal.builder()
                             .id(setmealId) //规定查询对象的id等于刚才查到的套餐id
                             .status(status)

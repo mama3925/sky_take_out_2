@@ -104,4 +104,20 @@ public class SetmealController {
         return Result.success(setmealVO);
     }
 
+    /**
+     * @param status
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/6 8:47
+     * @desc: 套餐启停
+     * @return: com.sky.result.Result
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("套餐起售、停售")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("套餐起售停手功能开始:{} {}", status, id);
+        setmealService.startOrStop(status, id);
+        return Result.success();
+    }
+
 }

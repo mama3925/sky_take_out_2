@@ -33,29 +33,39 @@ public interface SetmealService {
     PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
     /**
+     * @param ids
      * @author: xuwuyuan
      * @date: 2024/8/5 9:02
      * @desc: 批量删除功能
-     * @param ids
      * @return: void
      */
     void deleteByIDs(List<Long> ids);
 
     /**
+     * @param setmealDTO
      * @author: xuwuyuan
      * @date: 2024/8/5 9:45
      * @desc: 根据DTO对象来修改套餐，并且更改关联表，确保菜品变动都会实时反映在关联表里
-     * @param setmealDTO
      * @return: void
      */
     void updateWithDishes(SetmealDTO setmealDTO);
 
     /**
+     * @param id
      * @author: xuwuyuan
      * @date: 2024/8/5 10:49
      * @desc: 通过id查询套餐，并返回vo对象
-     * @param id
      * @return: com.sky.vo.SetmealVO
      */
     SetmealVO findByIdWithDish(Long id);
+
+    /**
+     * @param status
+     * @param id
+     * @author: xuwuyuan
+     * @date: 2024/8/6 8:47
+     * @desc: 套餐启停
+     * @return: void
+     */
+    void startOrStop(Integer status, Long id);
 }

@@ -94,4 +94,14 @@ public interface DishMapper {
      * @return: java.util.List<com.sky.entity.Dish>
      */
     List<Dish> list(Dish dish);
+
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/6 13:14
+     * @desc: 通过套餐id获取菜品列表，用于套餐起售控制，防止起售套餐包含未起售菜品。
+     * @param setmealId
+     * @return: java.util.List<com.sky.entity.Dish>
+     */
+    @Select("select d.* from dish d left join setmeal_dish sd on d.id = sd.dish_id where sd.setmeal_id = #{setmealId}")
+    List<Dish> getDishesBySetmealId(Long setmealId);
 }
