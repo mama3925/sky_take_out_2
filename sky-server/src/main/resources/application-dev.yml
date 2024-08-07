@@ -12,3 +12,9 @@ sky:
     access-key-id: LTAI5t8xtWtzxwHYLXAv6i7w
     access-key-secret:
     bucket-name: sky-take-out-wuyuan
+
+  redis:
+    host: localhost
+    port: 6379
+    password: woaimama1748
+    database: 10
