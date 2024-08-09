@@ -63,4 +63,16 @@ public class UserController {
         return Result.success(userLoginVO);
     }
 
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/9 12:46
+     * @desc: c端用户登录退出
+     * @return: com.sky.result.Result
+     */
+    @PostMapping("/logout")
+    @ApiOperation("退出")
+    public Result WX_logout() {
+        log.info("c端用户退出");
+        return Result.success();
+    }
 }

@@ -7,10 +7,7 @@ import com.sky.constant.StatusConstant;
 import com.sky.controller.admin.DishController;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
-import com.sky.entity.Dish;
-import com.sky.entity.DishFlavor;
-import com.sky.entity.Setmeal;
-import com.sky.entity.SetmealDish;
+import com.sky.entity.*;
 import com.sky.exception.*;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
@@ -242,7 +239,7 @@ public class DishServiceImpl implements DishService {
      * @param categoryId
      * @author: xuwuyuan
      * @date: 2024/8/5 11:24
-     * @desc: 返回菜品列表
+     * @desc: 返回菜品列表，用于套餐菜品选择功能
      * @return: java.util.List<com.sky.entity.Dish>
      */
     @Override
@@ -252,5 +249,33 @@ public class DishServiceImpl implements DishService {
                 .categoryId(categoryId)
                 .build();
         return dishMapper.list(dish);
+    }
+
+
+    /**
+     * @param dishQuery
+     * @author: xuwuyuan
+     * @date: 2024/8/8 10:58
+     * @desc: 返回带口味的列表
+     * @return: java.leih
+     */
+    @Override
+    public List<DishVO> listByCategoryIdWithFlavor(Dish dishQuery) {
+        //输入的user带有categoryId属性，并且确保已经启用
+        List<DishVO> resList = new ArrayList<>();//该列表用于存放DishVO实体类，之后输出
+        List<Dish> dishList = dishMapper.list(dishQuery);
+
+        //遍历所有dishList中的对象
+        for (Dish dish : dishList) {
+            Long dishId = dish.getId();
+            List<DishFlavor> dishFlavors = dishFlavorMapper.getByDishId(dishId);
+            DishVO dishVO = new DishVO();
+            BeanUtils.copyProperties(dish, dishVO);//拷贝基础部分
+
+            //还差了一个属性，dishFlavor列表
+            dishVO.setFlavors(dishFlavors);
+            resList.add(dishVO);
+        }
+        return resList;
     }
 }

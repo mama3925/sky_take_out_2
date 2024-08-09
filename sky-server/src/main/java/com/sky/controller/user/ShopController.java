@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @desc: 用户端营业状态管理
  * @createDate: 2024/8/7 13:47
  **/
-@RestController("UserShopController")
+@RestController("userShopController")
 @RequestMapping("/user/shop")
 @Api(tags = "用户营业状态管理")
 @Slf4j

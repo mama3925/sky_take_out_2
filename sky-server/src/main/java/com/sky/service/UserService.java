@@ -1,7 +1,11 @@
 package com.sky.service;
 
 import com.sky.dto.UserLoginDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.User;
+import com.sky.vo.DishVO;
+
+import java.util.List;
 
 /**
  * @author: xuwuyuan
@@ -18,4 +22,5 @@ public interface UserService {
      * @return: com.sky.entity.User
      */
     User WX_login(UserLoginDTO userLoginDTO);
+
 }

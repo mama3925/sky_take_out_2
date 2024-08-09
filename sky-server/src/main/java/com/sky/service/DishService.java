@@ -3,6 +3,7 @@ package com.sky.service;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
+import com.sky.entity.User;
 import com.sky.result.PageResult;
 import com.sky.vo.DishVO;
 
@@ -78,4 +79,14 @@ public interface DishService {
      * @return: java.util.List<com.sky.entity.Dish>
      */
     List<Dish> listByCategoryId(Long CategoryId);
+
+    //////以下都是用户端的新增业务接口
+    /**
+     * @author: xuwuyuan
+     * @date: 2024/8/8 10:58
+     * @desc: 返回带口味的菜品列表
+     * @param dish
+     * @return: java.util.List<com.sky.vo.DishVO>
+     */
+    List<DishVO> listByCategoryIdWithFlavor(Dish dish);
 }
