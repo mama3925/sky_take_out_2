@@ -25,4 +25,11 @@
         where id = #{id}
     </update>
 
+    <select id="getListByType" resultType="com.sky.entity.Category">
+        select * from category
+        <where>
+            <if test="type != null and type != ''">and type = #{type}</if>
+        </where>
+    </select>
+
 </mapper>

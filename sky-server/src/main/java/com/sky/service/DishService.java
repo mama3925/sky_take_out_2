@@ -5,6 +5,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.User;
 import com.sky.result.PageResult;
+import com.sky.vo.DishItemVO;
 import com.sky.vo.DishVO;
 
 import java.util.List;
@@ -89,4 +90,5 @@ public interface DishService {
      * @return: java.util.List<com.sky.vo.DishVO>
      */
     List<DishVO> listByCategoryIdWithFlavor(Dish dish);
+
 }

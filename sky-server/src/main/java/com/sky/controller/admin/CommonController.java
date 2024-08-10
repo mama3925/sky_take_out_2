@@ -21,7 +21,7 @@ import java.util.UUID;
  * @desc: 通用接口，用于图片上传
  * @create: 2024/7/29 16:32
  **/
-@RestController
+@RestController("adminCommonController")
 @RequestMapping("/admin/common")
 @Api(tags = "通用接口")
 @Slf4j

@@ -20,7 +20,7 @@ import java.util.List;
  * @desc: 分类管理控制类
  * @create: 2024/7/28 10:11
  **/
-@RestController
+@RestController("adminCategoryController")
 @Slf4j
 @Api(tags = "分类相关接口")
 @RequestMapping("/admin/category")

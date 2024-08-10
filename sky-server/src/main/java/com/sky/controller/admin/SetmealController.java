@@ -20,7 +20,7 @@ import java.util.List;
  * @desc: 套餐管理模块
  * @create: 2024/8/4 10:03
  **/
-@RestController
+@RestController("adminSetmealController")
 @RequestMapping("/admin/setmeal")
 @Api(tags = "套餐管理")
 @Slf4j

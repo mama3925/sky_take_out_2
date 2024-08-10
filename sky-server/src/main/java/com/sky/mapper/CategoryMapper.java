@@ -65,8 +65,6 @@ public interface CategoryMapper {
      * @param type
      * @return: java.util.List<com.sky.entity.Category>
      */
-    @Select("select * from category where type = #{type}")
-    List<Category> getListByType(Integer type);
-
+    List<Category> getListByType(Integer type);//这里一定要写xml文件动态sql，不要偷懒直接用@Select注解，不然用户端查询分类列表会出问题
 
 }

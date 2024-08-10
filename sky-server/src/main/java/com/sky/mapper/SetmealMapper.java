@@ -5,8 +5,12 @@ import com.sky.annotation.AutoFill;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.DishItemVO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author: xuwuyuan
@@ -82,4 +86,40 @@ public interface SetmealMapper {
     @Delete("delete from setmeal where id = #{setmealId}")
     void deleteById(Long setmealId);
 
+//    *
+//     * @author: xuwuyuan
+//     * @date: 2024/8/9 22:37
+//     * @desc: 根据传入实体删除对应套餐记录
+//     * @param setmeal
+//     * @return: java.util.List<com.sky.entity.Setmeal>
+//
+//    List<Setmeal> list(Setmeal setmeal);
+//
+//    *
+//     * @author: xuwuyuan
+//     * @date: 2024/8/10 9:51
+//     * @desc: 连接套餐表和关联表，之后分别取出四个属性。
+//     * @param setmealId
+//     * @return:
+//
+//    @Select("select sd.name, sd.copies, d.image, d.description from dish d right join setmeal_dish sd on d.id = sd.dish_id " +
+//            "where sd.setmeal_id = #{setmealId}")
+//    List<DishItemVO> getDishItemsBySetmealId(Long setmealId);
+
+    /**
+     * 动态条件查询套餐
+     * @param setmeal
+     * @return
+     */
+    List<Setmeal> list(Setmeal setmeal);
+
+    /**
+     * 根据套餐id查询菜品选项
+     * @param setmealId
+     * @return
+     */
+    @Select("select sd.name, sd.copies, d.image, d.description " +
+            "from setmeal_dish sd left join dish d on sd.dish_id = d.id " +
+            "where sd.setmeal_id = #{setmealId}")
+    List<DishItemVO> getDishItemsBySetmealId(Long setmealId);
 }

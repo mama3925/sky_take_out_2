@@ -48,5 +48,4 @@ public class DishController {
         List<DishVO> dishVOList = dishService.listByCategoryIdWithFlavor(dish);
         return Result.success(dishVOList);//这里漏了加上返回对象
     }
-
 }

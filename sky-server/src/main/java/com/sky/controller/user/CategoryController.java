@@ -20,7 +20,7 @@ import java.util.List;
  **/
 @RestController("userCategoryController")
 @RequestMapping("/user/category")
-@Api(tags = "分类查询接口")
+@Api(tags = "C端-分类接口")
 @Slf4j
 public class CategoryController {
 
@@ -28,16 +28,17 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
+     * @param type
      * @author: xuwuyuan
      * @date: 2024/8/9 13:09
      * @desc: 分类条件查询
-     * @param type
-     * @return: com.sky.result.Result<java.util.List<com.sky.entity.Category>>
+     * @return: com.sky.result.Result<java.util.List < com.sky.entity.Category>>
      */
     @GetMapping("/list")
-    @ApiOperation("条件查询")
-    public Result<List<Category>> listCategory(Integer type) {
-        log.info("c端分类条件查询:{}", type);
-        return Result.success(categoryService.listByType(type));
+    @ApiOperation("查询分类")
+    public Result<List<Category>> list(Integer type) {
+        log.info("c端分类条件查询: {}", type);
+        List<Category> list = categoryService.listByType(type);
+        return Result.success(list);
     }
 }
