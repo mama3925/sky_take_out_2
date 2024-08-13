@@ -99,18 +99,18 @@ public class CategoryController {
      */
     @PutMapping
     @ApiOperation("修改分类")
-    public Result modifyCategory(@RequestBody CategoryDTO categoryDTO) {//这里漏写了@RequestBody注解，导致前端json请求传不进去，值的批评！
+    public Result modifyCategory(@RequestBody CategoryDTO categoryDTO) {// 这里漏写了@RequestBody注解，导致前端json请求传不进去，值得批评！
         log.info("分类修改功能开始:{}", categoryDTO);
         categoryService.update(categoryDTO);
         return Result.success();
     }
 
     /**
+     * @param type
      * @author: xuwuyuan
      * @date: 2024/7/28 11:44
      * @desc: 根据int值type来查询对应分类，并返回一个String类型列表
-     * @param type
-     * @return: com.sky.result.Result<java.util.List<com.sky.entity.Category>>
+     * @return: com.sky.result.Result<java.util.List < com.sky.entity.Category>>
      */
     @GetMapping("/list")
     @ApiOperation("根据类型查询分类")
@@ -119,5 +119,7 @@ public class CategoryController {
         List<Category> list = categoryService.listByType(type);
         return Result.success(list);
     }
+
+
 
 }
