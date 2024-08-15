@@ -162,7 +162,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public void updatePasswd(PasswordEditDTO passwordEditDTO) {
-        Employee employee = new Employee();
+// 这一行不需要了，换用建造者模式        Employee employee = new Employee();
 
         //从传入DTO对象提取出旧密码和新密码
         String newPasswd = passwordEditDTO.getNewPassword();
@@ -171,11 +171,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employeeDB = employeeMapper.getUserById(passwordEditDTO.getEmpId());//数据库中查找DTO对象对应的记录
         oldPasswd = DigestUtils.md5DigestAsHex(oldPasswd.getBytes());//DTO对象的密码需要经过md5加密后，才能对应数据库里的密码字段。原因是数据库里的密码在初始插入时都做了md5加密处理。
         if (employeeDB.getPassword().equals(oldPasswd)) {
-            employee.setId(passwordEditDTO.getEmpId());//必须给employee传值对象一个id值，不然之后mapper的update方法无法工作。因为update方法利用id来确定需要更改的记录
-            employee.setPassword(DigestUtils.md5DigestAsHex(newPasswd.getBytes())); //将临时密码传值对象的密码属性改成新密码，并md5加密
-            //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这两行代码了
-            /*employee.setUpdateTime(LocalDateTime.now());//修改时间字段
-            employee.setUpdateUser(BaseContext.getCurrentId());//从LocalThread局部变量里面得到修改人的用户id，以此作为"修改人"字段*/
+            // 2024/08/13发现，当时没有源码，我的实现方法不够好
+//            employee.setId(passwordEditDTO.getEmpId());//必须给employee传值对象一个id值，不然之后mapper的update方法无法工作。因为update方法利用id来确定需要更改的记录
+//            employee.setPassword(DigestUtils.md5DigestAsHex(newPasswd.getBytes())); //将临时密码传值对象的密码属性改成新密码，并md5加密
+//            //有了aop功能后，已经编写切面类，实现公共字段自动填充，所以不需要下面这两行代码了
+//            /*employee.setUpdateTime(LocalDateTime.now());//修改时间字段
+//            employee.setUpdateUser(BaseContext.getCurrentId());//从LocalThread局部变量里面得到修改人的用户id，以此作为"修改人"字段*/
+
+            // 2024/08/13 22:02给出新写法，使用建造者模式构建数据封装对象
+            Employee employee = Employee.builder()
+                    .id(passwordEditDTO.getEmpId())
+                    .password(DigestUtils.md5DigestAsHex(newPasswd.getBytes()))
+                    .build();
             employeeMapper.update(employee);
         } else {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);//老密码错误，系统拒绝更改密码。所以抛出错误给全局异常工具类

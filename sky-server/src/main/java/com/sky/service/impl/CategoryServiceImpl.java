@@ -148,6 +148,4 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> listCategory = categoryMapper.getListByType(type); //从数据库里找对应的Category列表，使得type字段等于形式参数type值
         return listCategory;
     }
-
-
 }
