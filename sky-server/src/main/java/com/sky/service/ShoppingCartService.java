@@ -28,4 +28,12 @@ public interface ShoppingCartService {
      * @return java.util.List<com.sky.entity.ShoppingCart>
      **/
     List<ShoppingCart> list();
+
+    /**
+     * @author xuwuyuan
+     * @date 2024/8/24 16:05
+     * @desc 清空购物车
+     * @return void
+     **/
+    void cleanCart();
 }

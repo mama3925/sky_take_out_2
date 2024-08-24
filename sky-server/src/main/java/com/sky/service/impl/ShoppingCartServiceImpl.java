@@ -90,4 +90,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .userId(BaseContext.getCurrentId())
                 .build());
     }
+
+    /**
+     * @author xuwuyuan
+     * @date 2024/8/24 16:06
+     * @desc 清空购物车
+     * @return void
+     **/
+    @Override
+    public void cleanCart() {
+        shoppingCartMapper.removeByUserId(BaseContext.getCurrentId());
+    }
 }
