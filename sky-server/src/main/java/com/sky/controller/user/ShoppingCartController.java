@@ -57,6 +57,12 @@ public class ShoppingCartController {
         return Result.success(shoppingCartList);
     }
 
+    /**
+     * @author xuwuyuan
+     * @date 2024/8/24 21:20
+     * @desc 清空购物车
+     * @return com.sky.result.Result
+     **/
     @ApiOperation("清空购物车")
     @DeleteMapping("/clean")
     public Result remove() {
