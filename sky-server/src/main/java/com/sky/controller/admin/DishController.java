@@ -117,7 +117,7 @@ public class DishController {
     @ApiOperation("修改菜品")
     public Result update(@RequestBody DishDTO dishDTO) {
         log.info("修改菜品功能开始:{}", dishDTO);
-        dishService.updateWithFlavor(dishDTO); //这里的方法最好由update重命名为updateWtihFlavor
+        dishService.updateWithFlavor(dishDTO); // 这里的方法最好由update重命名为updateWtihFlavor
 
         // 清除全部缓存，因为修改的菜品可能更改了categoryId，正好跨到别的分类id上去了，所以只删一个分类的id是不够的
         String key = "dish_*";
