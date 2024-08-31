@@ -52,5 +52,4 @@ public class OrdersDTO implements Serializable {
     private String consignee;
 
     private List<OrderDetail> orderDetails;
-
 }

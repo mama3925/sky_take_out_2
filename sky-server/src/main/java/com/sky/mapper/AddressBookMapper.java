@@ -73,6 +73,13 @@ public interface AddressBookMapper {
     // @AutoFill(OperationType.UPDATE)
     void update(AddressBook addressBook);
 
+    /**
+     * @param addressBook
+     * @author xuwuyuan
+     * @date 2024/8/25 20:44
+     * @desc 将该用户的所有地址设为非默认
+     * @return void
+     **/
     @Update("update address_book set user_id = #{userId}, is_default = #{isDefault}")
     void setAllToNotDefault(AddressBook addressBook);
 }
