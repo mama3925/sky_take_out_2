@@ -3,6 +3,7 @@ package com.sky.service.impl;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.OrdersDTO;
+import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.entity.AddressBook;
 import com.sky.entity.OrderDetail;
@@ -101,5 +102,26 @@ public class OrderServiceImpl implements OrderService {
                 .orderTime(order.getOrderTime())
                 .orderAmount(order.getAmount())
                 .build();
+    }
+
+    /**
+     * @param orderNumber
+     * @author xuwuyuan
+     * @date 2024/9/1 17:37
+     * @desc 通过订单号结合用户id，向用户返回支付成功消息
+     * @return void
+     **/
+    @Override
+    public void paySuccess(String orderNumber) {
+        // 使用数据查询实体
+        Orders orderDB = orderMapper.findByOrderNumberAndUserId(orderNumber, BaseContext.getCurrentId());
+        // 向数据库插入新值，改变支付状态为已支付，改变订单状态为待商家确认.最后确定支付时间为现在
+        Orders order = Orders.builder()
+                .id(orderDB.getId())
+                .status(Orders.TO_BE_CONFIRMED)
+                .payStatus(Orders.PAID)
+                .checkoutTime(LocalDateTime.now())
+                .build();
+        orderMapper.update(order);
     }
 }

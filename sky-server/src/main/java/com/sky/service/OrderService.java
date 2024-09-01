@@ -1,6 +1,7 @@
 package com.sky.service;
 
 import com.sky.dto.OrdersDTO;
+import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
@@ -21,4 +22,13 @@ public interface OrderService {
      * @desc 用户新增订单
      **/
     OrderSubmitVO save(OrdersSubmitDTO ordersSubmitDTO);
+
+    /**
+     * @param orderNumber
+     * @author xuwuyuan
+     * @date 2024/9/1 17:36
+     * @desc 通过订单号向用户返回支付成功消息
+     * @return void
+     **/
+    void paySuccess(String orderNumber);
 }
