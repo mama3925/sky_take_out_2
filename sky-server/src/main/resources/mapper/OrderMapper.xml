@@ -11,6 +11,7 @@
                 #{estimatedDeliveryTime}, #{deliveryStatus}, #{packAmount}, #{tablewareNumber}, #{tablewareStatus})
     </insert>
 
+    <!--使用全部属性更新    -->
     <update id="update">
         update orders
         <set>
